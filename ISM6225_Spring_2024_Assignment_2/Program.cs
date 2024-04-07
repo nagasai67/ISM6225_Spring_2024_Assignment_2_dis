@@ -100,6 +100,11 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                //The time complexity of the given code is O(n), where n is the length of the input array nums.
+                //The code iterates through the input array once using a single loop.
+                //The space complexity of the given code is O(1) or constant space.
+
+                //Self-reflection : To update array based on conditions using two variables on same array
                 if (nums.Length == 0) // check if length of array is null
                     return 0;
 
@@ -147,9 +152,13 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                //The time complexity of the given code is O(n), where n is the length of the input array nums.
+                //The space complexity of the given code is O(1) or constant space.
+
+                //Self-reflection : Update the same array based on count of zeroes
                 int i = 0, j = 0;
 
-                while (i < nums.Length) // Traverse the array for array elements without zero
+                while (i < nums.Length) // Traverse the array for array elements without zero and update positions
                 {
                     if (nums[i] != 0)
                     {
@@ -215,6 +224,12 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                //The time complexity of the given code is O(n^2), where n is the length of the input array nums.
+                //The code iterates through the array once with a loop of length nums.Length - 2 (from 0 to nums.Length - 3), and inside this loop, it performs a two-pointer technique to find triplets whose sum is zero.
+                //The two-pointer technique itself takes O(n) time to traverse the array for each iteration of the outer loop.
+                //The space complexity of the given code is O(n), where n is the number of unique triplets whose sum is zero.
+
+                //Self-reflection : Two pointer technique, sorting
                 List<IList<int>> res = new List<IList<int>>();
                 if (nums == null || nums.Length < 3)
                     return res;
@@ -236,9 +251,9 @@ namespace ISM6225_Spring_2024_Assignment_2
                             left++;
                             right--;
 
-                            while (left < right && nums[left] == nums[left - 1])
+                            while (left < right && nums[left] == nums[left - 1])   //Update left pointer based on condition
                                 left++;
-                            while (left < right && nums[right] == nums[right + 1])
+                            while (left < right && nums[right] == nums[right + 1])  //Update right pointer based on condition
                                 right--;
                         }
                         else if (nums[i] + nums[left] + nums[right] > 0)
@@ -283,23 +298,27 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                //The time complexity of the given code is O(n), where n is the length of the input array nums.
+                //The space complexity of the given code is O(1), as it uses only a constant amount of extra space regardless of the size of the input array nums.
+                
+                //Self-reflection : Array manipulation
                 int max = 0;
                 int temp = 0;
-                for (int i = 0; i < nums.Length; i++)
+                for (int i = 0; i < nums.Length; i++) // Check for consecutive ones and update max variable based on it
                 {
-                    if (nums[i] == 1)
+                    if (nums[i] == 1)                 // Update temp variable if it is 1
                     {
                         temp++;
                     }
-                    else
+                    else                             // Update max variable if it is not 1
                     {
-                        if (temp > max)
+                        if (temp > max)               
                             max = temp;
                         temp = 0;
                     }
                 }
 
-                if (temp > max)
+                if (temp > max)                       // Check after exiting the loop and update the max variable
                     max = temp;
 
                 return max;
@@ -338,6 +357,11 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                //The time complexity of the given code is O(log(binary)), where binary is the input binary number.
+                //The space complexity of the given code is O(1), as it uses only a constant amount of extra space regardless of the size of the input binary number.
+                
+
+                //Self-reflection : Convert binary to decimal without bit manipulation
                 int num = binary;
                 int dec_value = 0;
 
@@ -346,12 +370,12 @@ namespace ISM6225_Spring_2024_Assignment_2
                 int base1 = 1;
 
                 int temp = num;
-                while (temp > 0)
+                while (temp > 0)            //Iterate through number 
                 {
                     int last_digit = temp % 10;
                     temp = temp / 10;
 
-                    dec_value += last_digit * base1;
+                    dec_value += last_digit * base1;   // Update decimal value 
 
                     base1 = base1 * 2;
                 }
@@ -394,9 +418,14 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                //The time complexity of the given code is O(nlogn), where n is the length of the input array nums.
+                //The code sorts the array using Array.Sort(nums), which typically has a time complexity of O(nlogn) for an array of length n.
+                //The space complexity of the given code is O(1), as it uses only a constant amount of extra space regardless of the size of the input array nums.
+                
+                // Self-reflection : Sorting techniques
                 int max = 0;
                 int temp = -1;
-                if (nums.Length == 1)
+                if (nums.Length == 1)           // Check if length is one and return 0
                 {
                     return 0;
                 }
@@ -406,11 +435,11 @@ namespace ISM6225_Spring_2024_Assignment_2
                 }
                 else
                 {
-                    Array.Sort(nums);
+                    Array.Sort(nums);            // sort the array to get maximum gap
                     for (int i = 0; i < nums.Length - 1; i++)
                     {
                         temp = nums[i + 1] - nums[i];
-                        if (temp == max || temp > max)
+                        if (temp == max || temp > max)      // Update temp variable based on condition
                         {
                             max = temp;
                         }
@@ -456,13 +485,15 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                Array.Sort(nums);
-                int[] A = new int[nums.Length];
-                Array.Copy(nums, A, nums.Length);
-
-                for (var i = A.Length - 1; i > 1; --i)
-                    if (A[i] < A[i - 1] + A[i - 2])
-                        return A[i] + A[i - 1] + A[i - 2];
+                //The time complexity of the given code is O(nlogn), where n is the length of the input array nums.
+                //The code sorts the array using Array.Sort(nums), which typically has a time complexity of O(nlogn) for an array of length n.
+                //The space complexity of the given code is O(1)
+                
+                //Self-reflection : Array Manipulation, Sorting
+                Array.Sort(nums);                           // Sort array
+                for (var i = nums.Length - 1; i > 1; --i)  // Traverse the array
+                    if (nums[i] < nums[i - 1] + nums[i - 2])
+                        return nums[i] + nums[i - 1] + nums[i - 2];
                 return 0;
             }
             catch (Exception)
@@ -517,18 +548,23 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                Stack<char> st = new Stack<char>();
+                //The time complexity of the given code is O(n), where n is the length of the input string s.
+                //The space complexity of the given code is O(n), where n is the length of the input string s.
+                //It utilizes a stack (Stack<char> st) to store characters, which can potentially grow up to the length of the input string.
+
+                // Self-reflection: Stack approach to solve these kind of similar problems
+                Stack<char> st = new Stack<char>();        
                 int last = part.Length - 1;
                 for (int i = 0; i < s.Length; i++)
                 {
                     st.Push(s[i]);
-                    if (st.Count >= part.Length && st.Peek() == part[last])
+                    if (st.Count >= part.Length && st.Peek() == part[last]) // Check if we got the part string
                     {
                         int idx = last;
                         string removed = "";
-                        while (idx >= 0 && st.Peek() == part[idx])
+                        while (idx >= 0 && st.Peek() == part[idx])    // Check if peek element of stack is equal
                         {
-                            removed = st.Pop() + removed;
+                            removed = st.Pop() + removed;             // Pop the element and update the index 
                             idx--;
                         }
                         if (idx > -1)
@@ -536,7 +572,7 @@ namespace ISM6225_Spring_2024_Assignment_2
                     }
                 }
                 string res = "";
-                while (st.Count > 0) res = st.Pop() + res;
+                while (st.Count > 0) res = st.Pop() + res;            // Pop the elements and append in res string
                 return res;
             }
             catch (Exception)
