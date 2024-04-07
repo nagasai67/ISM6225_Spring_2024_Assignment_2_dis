@@ -48,13 +48,13 @@ namespace ISM6225_Spring_2024_Assignment_2
 
             //Question 6:
             Console.WriteLine("Question 6:");
-            int[] nums5 = { 3,6,9,1 };
+            int[] nums5 = { 3, 6, 9, 1 };
             int maxGap = MaximumGap(nums5);
             Console.WriteLine(maxGap);
 
             //Question 7:
             Console.WriteLine("Question 7:");
-            int[] nums6 = { 2,1,2 };
+            int[] nums6 = { 2, 1, 2 };
             int largestPerimeterResult = LargestPerimeter(nums6);
             Console.WriteLine(largestPerimeterResult);
 
@@ -100,7 +100,19 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                if (nums.Length == 0) // check if length of array is null
+                    return 0;
+
+                int i = 0;
+                for (int j = 1; j < nums.Length; j++)
+                {
+                    if (nums[i] != nums[j]) // check if the numbers are equal or not 
+                    {
+                        nums[i++ + 1] = nums[j];
+                    }
+                }
+
+                return ++i;
             }
             catch (Exception)
             {
@@ -135,7 +147,24 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return new List<int>();
+                int i = 0, j = 0;
+
+                while (i < nums.Length) // Traverse the array for array elements without zero
+                {
+                    if (nums[i] != 0)
+                    {
+                        nums[j] = nums[i];
+                        j++;
+                    }
+                    i++;
+                }
+
+                while (j < nums.Length) // move array positions
+                {
+                    nums[j] = 0;
+                    j++;
+                }
+                return nums;
             }
             catch (Exception)
             {
@@ -186,7 +215,40 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return new List<IList<int>>();
+                List<IList<int>> res = new List<IList<int>>();
+                if (nums == null || nums.Length < 3)
+                    return res;
+
+                Array.Sort(nums);
+                for (int i = 0; i < nums.Length - 2; i++)
+                {
+                    // If nums[i] > 0, we can't find a valid triplet, since nums is sorted and nums[i] the smallest number.
+                    // To avoid duplicate triplets, we should skip nums[i] if nums[i] == nums[i-1]
+                    if (nums[i] > 0 || (i > 0 && nums[i] == nums[i - 1]))
+                        continue;
+
+                    int left = i + 1, right = nums.Length - 1;
+                    while (left < right)
+                    {
+                        if (nums[i] + nums[left] + nums[right] == 0)
+                        {
+                            res.Add(new List<int>() { nums[i], nums[left], nums[right] });
+                            left++;
+                            right--;
+
+                            while (left < right && nums[left] == nums[left - 1])
+                                left++;
+                            while (left < right && nums[right] == nums[right + 1])
+                                right--;
+                        }
+                        else if (nums[i] + nums[left] + nums[right] > 0)
+                            right--;
+                        else
+                            left++;
+                    }
+                }
+
+                return res;
             }
             catch (Exception)
             {
@@ -221,7 +283,26 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int max = 0;
+                int temp = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (nums[i] == 1)
+                    {
+                        temp++;
+                    }
+                    else
+                    {
+                        if (temp > max)
+                            max = temp;
+                        temp = 0;
+                    }
+                }
+
+                if (temp > max)
+                    max = temp;
+
+                return max;
             }
             catch (Exception)
             {
@@ -257,7 +338,25 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int num = binary;
+                int dec_value = 0;
+
+                // Initializing base1
+                // value to 1, i.e 2^0
+                int base1 = 1;
+
+                int temp = num;
+                while (temp > 0)
+                {
+                    int last_digit = temp % 10;
+                    temp = temp / 10;
+
+                    dec_value += last_digit * base1;
+
+                    base1 = base1 * 2;
+                }
+
+                return dec_value;
             }
             catch (Exception)
             {
@@ -295,7 +394,29 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int max = 0;
+                int temp = -1;
+                if (nums.Length == 1)
+                {
+                    return 0;
+                }
+                if (nums.Length == 2)
+                {
+                    return Math.Abs(nums[0] - nums[1]);
+                }
+                else
+                {
+                    Array.Sort(nums);
+                    for (int i = 0; i < nums.Length - 1; i++)
+                    {
+                        temp = nums[i + 1] - nums[i];
+                        if (temp == max || temp > max)
+                        {
+                            max = temp;
+                        }
+                    }
+                }
+                return max;
             }
             catch (Exception)
             {
@@ -335,6 +456,13 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
+                Array.Sort(nums);
+                int[] A = new int[nums.Length];
+                Array.Copy(nums, A, nums.Length);
+
+                for (var i = A.Length - 1; i > 1; --i)
+                    if (A[i] < A[i - 1] + A[i - 2])
+                        return A[i] + A[i - 1] + A[i - 2];
                 return 0;
             }
             catch (Exception)
@@ -389,7 +517,27 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return "";
+                Stack<char> st = new Stack<char>();
+                int last = part.Length - 1;
+                for (int i = 0; i < s.Length; i++)
+                {
+                    st.Push(s[i]);
+                    if (st.Count >= part.Length && st.Peek() == part[last])
+                    {
+                        int idx = last;
+                        string removed = "";
+                        while (idx >= 0 && st.Peek() == part[idx])
+                        {
+                            removed = st.Pop() + removed;
+                            idx--;
+                        }
+                        if (idx > -1)
+                            foreach (var c in removed) st.Push(c);
+                    }
+                }
+                string res = "";
+                while (st.Count > 0) res = st.Pop() + res;
+                return res;
             }
             catch (Exception)
             {
